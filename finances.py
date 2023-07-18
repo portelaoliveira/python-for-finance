@@ -2,9 +2,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import pandas_datareader.data as web
+from datetime import datetime
+import yfinance as yf
 
-
-quotation_ibov = web.DataReader('^BVSP', data_source='yahoo', start='2020-1-1', end='2020-11-10')
+yf.pdr_override()
+start_date = datetime(2022, 4, 1)
+end_date = datetime(2023, 7, 18)
+indeces = '^BVSP'
+quotation_ibov = web.get_data_yahoo(indeces, start=start_date, end=end_date)
 print(quotation_ibov)
 quotation_ibov['Adj Close'].plot(figsize=(15, 5))
 return_ibov = quotation_ibov['Adj Close'][-1] / quotation_ibov['Adj Close'][0] - 1
